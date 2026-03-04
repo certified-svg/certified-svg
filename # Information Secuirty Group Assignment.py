@@ -39,4 +39,43 @@ decrypted_padded = cipher.decrypt(ciphertext)
 
 decrypted = unpad(decrypted_padded, AES.block_size)
 
+
 print("Decrypted:", decrypted.decode())
+
+
+
+
+
+#Encrypt
+
+
+with open("C:/Users/22jus/OneDrive/username&password/sample.txt.docx", "wb") as file:
+    data = file.read()
+
+cipher = AES.new(key, AES.MODE_CBC)
+iv = cipher.iv
+
+padded_data = pad(data, AES.block_size)
+
+ciphertext = cipher.encrypt(padded_data)
+
+with open("C:/Users/22jus/OneDrive/username&password/sample_encrypted.docx", "wb") as file:
+    file.write(iv + ciphertext)
+
+
+# Decrypt 
+
+with open("C:/Users/22jus/OneDrive/username&password/sample_encrypted.docx", "wb") as file:
+    raw = file.read()
+
+iv = raw[:16]
+ciphertext = raw[16:]
+
+cipher = AES.new(key, AES.MODE_CBC, iv)
+
+decrypted_padded = cipher.decrypt(ciphertext)
+
+decrypted = unpad(decrypted_padded, AES.block_size)
+
+with open("C:/Users/22jus/OneDrive/username&password/sample_decrypted.docx", "wb") as file:
+    file.write(decrypted)
